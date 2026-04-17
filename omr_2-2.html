@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>봄날수학 중2 OMR</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green: #6b9bd2; --green-dark: #4a7fb5; --green-light: #edf3fb;
+  --coral: #e05a3a; --coral-light: #fdeee9;
+  --bg: #f4f6f9; --card: #ffffff; --text: #1a2535; --text-muted: #7a8fa0;
+  --border: #d0dde8; --shadow: 0 2px 20px rgba(74,127,181,0.10); --radius: 14px; --font: 'Noto Sans KR', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font); background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 60px; }
+.header { background: var(--green-dark); padding: 14px 20px 12px; display: flex; align-items: center; gap: 12px; position: sticky; top: 0; z-index: 100; box-shadow: 0 3px 16px rgba(74,127,181,0.3); }
+.back-btn { color: rgba(255,255,255,0.85); font-size: 20px; text-decoration: none; line-height: 1; padding: 2px 6px 2px 0; }
+.header-text { flex: 1; }
+.header-title { font-size: 17px; font-weight: 900; color: #fff; }
+.header-sub { font-size: 11px; color: rgba(255,255,255,0.7); margin-top: 1px; }
+.wrap { max-width: 900px; margin: 0 auto; padding: 16px 14px 0; }
+.school-row { display: flex; gap: 8px; margin-bottom: 16px; }
+.school-btn { flex: 1; padding: 10px 8px; border: 2px solid var(--border); background: var(--card); border-radius: 10px; font-size: 13px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: all .2s; text-align: center; font-family: var(--font); }
+.school-btn.active { background: var(--green-light); border-color: var(--green-dark); color: var(--green-dark); }
+.name-box { background: var(--card); border-radius: var(--radius); padding: 13px 16px; margin-bottom: 14px; box-shadow: var(--shadow); border: 1.5px solid var(--border); display: flex; align-items: center; gap: 12px; }
+.name-label { font-size: 13px; font-weight: 700; color: var(--green-dark); white-space: nowrap; }
+.name-input { flex: 1; border: none; outline: none; font-size: 16px; font-family: var(--font); font-weight: 600; color: var(--text); background: transparent; }
+.name-input::placeholder { color: #b5c4d0; font-weight: 400; }
+.progress-text { font-size: 12px; color: var(--text-muted); white-space: nowrap; }
+.omr-grid { display: grid; grid-template-columns: 1fr; gap: 6px; margin-bottom: 16px; }
+@media (min-width: 600px) { .omr-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 900px) { .omr-grid { grid-template-columns: 1fr 1fr 1fr; } }
+.omr-row { background: var(--card); border-radius: 10px; padding: 9px 12px; display: flex; align-items: center; gap: 8px; border: 1.5px solid var(--border); transition: border-color .2s; }
+.omr-row.wrong { border-color: var(--coral); background: var(--coral-light); }
+.qnum { font-size: 12px; font-weight: 700; color: var(--text-muted); min-width: 26px; text-align: center; }
+.omr-row.wrong .qnum { color: var(--coral); }
+.bubbles { display: flex; gap: 6px; flex: 1; justify-content: center; }
+.bubble { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--border); background: var(--bg); font-size: 13px; font-weight: 700; color: var(--text-muted); cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; -webkit-tap-highlight-color: transparent; user-select: none; font-family: var(--font); }
+.bubble:hover { border-color: var(--green-dark); color: var(--green-dark); }
+.bubble.selected { background: var(--green-dark); border-color: var(--green-dark); color: #fff; }
+.bubble.ok { background: var(--green-dark); border-color: var(--green-dark); color: #fff; }
+.bubble.ng { background: var(--coral); border-color: var(--coral); color: #fff; }
+.bubble.locked { cursor: default; pointer-events: none; }
+.sa-section { margin-bottom: 16px; }
+.sa-title { font-size: 13px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; padding-left: 4px; }
+.sa-grid { display: grid; grid-template-columns: 1fr; gap: 6px; }
+@media (min-width: 600px) { .sa-grid { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 900px) { .sa-grid { grid-template-columns: 1fr 1fr 1fr; } }
+.sa-row { background: var(--card); border-radius: 10px; padding: 10px 12px; border: 1.5px solid var(--border); display: flex; align-items: center; gap: 10px; transition: border-color .2s; }
+.sa-row.wrong { border-color: var(--coral); background: var(--coral-light); }
+.sa-row.correct { border-color: var(--green-dark); background: var(--green-light); }
+.sa-qnum { font-size: 12px; font-weight: 700; color: var(--text-muted); min-width: 26px; text-align: center; }
+.sa-input { flex: 1; border: none; outline: none; font-size: 15px; font-weight: 600; font-family: var(--font); color: var(--text); background: transparent; min-width: 0; }
+.sa-input::placeholder { color: #b5c4d0; font-weight: 400; font-size: 13px; }
+.sa-input.locked { pointer-events: none; }
+.sa-badge { font-size: 11px; font-weight: 700; padding: 3px 8px; border-radius: 20px; white-space: nowrap; }
+.sa-badge.ok { background: var(--green-dark); color: #fff; }
+.sa-badge.ng { background: var(--coral); color: #fff; }
+.sa-badge.un { background: #e0e0e0; color: #888; }
+.sa-answer-hint { font-size: 11px; color: var(--coral); font-weight: 600; margin-top: 4px; padding-left: 36px; }
+.grade-btn-wrap { margin-bottom: 16px; }
+.grade-btn { width: 100%; padding: 14px; background: var(--green-dark); color: #fff; border: none; border-radius: var(--radius); font-size: 16px; font-weight: 700; font-family: var(--font); cursor: pointer; transition: all .2s; box-shadow: 0 4px 14px rgba(74,127,181,0.3); }
+.grade-btn:hover { background: #3a6a9a; }
+.grade-btn:disabled { background: #b5c4d0; box-shadow: none; cursor: default; }
+.result-card { background: var(--card); border-radius: var(--radius); padding: 22px 20px; margin-bottom: 18px; border: 2px solid var(--green-dark); box-shadow: var(--shadow); display: none; }
+.result-card.show { display: block; }
+.result-header { font-size: 13px; font-weight: 600; color: var(--text-muted); margin-bottom: 10px; text-align: center; }
+.result-score { font-size: 64px; font-weight: 900; color: var(--green-dark); text-align: center; line-height: 1; margin-bottom: 4px; }
+.result-score-sub { font-size: 14px; color: var(--text-muted); text-align: center; margin-bottom: 16px; }
+.result-stats { display: flex; gap: 8px; justify-content: center; margin-bottom: 16px; flex-wrap: wrap; }
+.stat-chip { padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; }
+.stat-chip.total { background: var(--green-light); color: var(--green-dark); }
+.stat-chip.wrong-chip { background: var(--coral-light); color: var(--coral); }
+.stat-chip.rate { background: #f0f3f6; color: var(--text-muted); }
+.wrong-section { margin-bottom: 16px; }
+.wrong-label { font-size: 12px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; text-align: center; }
+.wrong-list { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+.wrong-chip { background: var(--coral); color: #fff; border-radius: 8px; padding: 5px 12px; font-size: 14px; font-weight: 800; min-width: 44px; text-align: center; }
+.all-correct { text-align: center; color: var(--green-dark); font-size: 15px; font-weight: 700; padding: 6px 0; }
+.capture-btn { width: 100%; padding: 13px; background: #fff; color: var(--green-dark); border: 2px solid var(--green-dark); border-radius: var(--radius); font-size: 15px; font-weight: 700; font-family: var(--font); cursor: pointer; transition: all .2s; margin-top: 4px; }
+.capture-btn:hover { background: var(--green-light); }
+.hidden { display: none !important; }
+</style>
+</head>
+<body>
+<div class="header">
+  <a class="back-btn" href="index.html">←</a>
+  <div class="header-text">
+    <div class="header-title">중학교 2학년</div>
+    <div class="header-sub">2025 1학기 중간고사</div>
+  </div>
+</div>
+<div class="wrap">
+  <div class="school-row" id="schoolRow"></div>
+  <div class="name-box">
+    <span class="name-label">이름</span>
+    <input class="name-input" id="nameInput" type="text" placeholder="이름을 입력하세요" maxlength="10" autocomplete="off">
+    <span class="progress-text" id="progressText"></span>
+  </div>
+  <div class="omr-grid" id="omrGrid"></div>
+  <div class="sa-section hidden" id="saSection">
+    <div class="sa-title">✏️ 주관식</div>
+    <div class="sa-grid" id="saGrid"></div>
+  </div>
+  <div class="grade-btn-wrap">
+    <button class="grade-btn" id="gradeBtn" onclick="gradeOMR()">채점하기</button>
+  </div>
+  <div class="result-card" id="resultCard">
+    <div class="result-header" id="resultHeader"></div>
+    <div class="result-score" id="resultScore"></div>
+    <div class="result-score-sub" id="resultScoreSub"></div>
+    <div class="result-stats" id="resultStats"></div>
+    <div class="wrong-section">
+      <div class="wrong-label">틀린 문제</div>
+      <div class="wrong-list" id="wrongList"></div>
+    </div>
+    <button class="capture-btn" onclick="alert('화면을 캡처해서 선생님께 제출해주세요! 📷')">📷 캡처해서 선생님께 제출!</button>
+  </div>
+</div>
+<script>
+const SCHOOLS = [
+  { id:'g2_naseong', name:'나성중', mc:{count:23,answers:[4,3,5,1,1,2,2,1,4,3,4,5,4,5,3,1,5,2,3,4,2,3,1]} },
+  { id:'g2_daejung', name:'다정중', mc:{count:22,answers:[5,4,3,5,2,3,3,1,4,2,2,1,4,5,1,1,5,4,2,2,4,5]}, sa:[{num:23,answer:'113'},{num:24,answer:'97'},{num:25,answer:'4'},{num:26,answer:'7'},{num:27,answer:'15'}] },
+  { id:'g2_dodam',   name:'도담중', mc:{count:25,answers:[2,4,3,1,4,4,3,3,1,4,2,3,2,5,1,2,5,5,5,1,3,4,5,2,2]} }
+];
+let curSchool=SCHOOLS[0],mcAnswers=[],saAnswers=[],graded=false;
+function saveKey(){return'omr_'+curSchool.id;}
+function saveState(){const name=document.getElementById('nameInput').value;try{localStorage.setItem(saveKey(),JSON.stringify({name,mcAnswers,saAnswers,graded}));}catch(e){}}
+function loadState(){
+  graded=false;mcAnswers=new Array(curSchool.mc.count).fill(0);saAnswers=curSchool.sa?curSchool.sa.map(()=>''):[];
+  let saved=null;try{const r=localStorage.getItem(saveKey());if(r)saved=JSON.parse(r);}catch(e){}
+  if(saved){document.getElementById('nameInput').value=saved.name||'';if(saved.mcAnswers&&saved.mcAnswers.length===curSchool.mc.count)mcAnswers=saved.mcAnswers;if(saved.saAnswers&&curSchool.sa&&saved.saAnswers.length===curSchool.sa.length)saAnswers=saved.saAnswers;if(saved.graded)graded=true;}else{document.getElementById('nameInput').value='';}
+  renderOMR();if(graded)renderGradedState();
+}
+function selectSchool(id){curSchool=SCHOOLS.find(s=>s.id===id);document.querySelectorAll('.school-btn').forEach(b=>b.classList.toggle('active',b.dataset.id===id));loadState();}
+function renderSchoolRow(){const row=document.getElementById('schoolRow');row.innerHTML='';SCHOOLS.forEach(s=>{const b=document.createElement('button');b.className='school-btn'+(s.id===curSchool.id?' active':'');b.dataset.id=s.id;b.textContent=s.name;b.onclick=()=>selectSchool(s.id);row.appendChild(b);});}
+function renderOMR(){
+  const grid=document.getElementById('omrGrid');grid.innerHTML='';
+  for(let q=0;q<curSchool.mc.count;q++){
+    const row=document.createElement('div');row.className='omr-row';row.id='row_'+q;
+    const qn=document.createElement('span');qn.className='qnum';qn.textContent=(q+1)+'번';row.appendChild(qn);
+    const bubbles=document.createElement('div');bubbles.className='bubbles';
+    for(let v=1;v<=5;v++){const b=document.createElement('button');b.className='bubble';b.id='b_'+q+'_'+v;b.textContent='①②③④⑤'[v-1];if(mcAnswers[q]===v)b.classList.add('selected');b.onclick=()=>toggleBubble(q,v);bubbles.appendChild(b);}
+    row.appendChild(bubbles);grid.appendChild(row);
+  }
+  const saSection=document.getElementById('saSection'),saGrid=document.getElementById('saGrid');saGrid.innerHTML='';
+  if(curSchool.sa&&curSchool.sa.length>0){saSection.classList.remove('hidden');curSchool.sa.forEach((item,i)=>{const row=document.createElement('div');row.className='sa-row';row.id='sarow_'+i;const qn=document.createElement('span');qn.className='sa-qnum';qn.textContent=item.num+'번';row.appendChild(qn);const inp=document.createElement('input');inp.className='sa-input';inp.id='sainp_'+i;inp.type='text';inp.placeholder='답 입력';inp.value=saAnswers[i]||'';inp.oninput=()=>{saAnswers[i]=inp.value;saveState();updateProgress();};row.appendChild(inp);const badge=document.createElement('span');badge.className='sa-badge';badge.id='sabadge_'+i;row.appendChild(badge);saGrid.appendChild(row);});}
+  else{saSection.classList.add('hidden');}
+  document.getElementById('gradeBtn').disabled=false;document.getElementById('resultCard').classList.remove('show');updateProgress();
+}
+function toggleBubble(q,v){if(graded)return;mcAnswers[q]=(mcAnswers[q]===v)?0:v;for(let i=1;i<=5;i++){const b=document.getElementById('b_'+q+'_'+i);if(b)b.className='bubble'+(mcAnswers[q]===i?' selected':'');}saveState();updateProgress();}
+function updateProgress(){const mc=mcAnswers.filter(v=>v!==0).length,sa=saAnswers.filter(v=>v.trim()!=='').length,total=curSchool.mc.count+(curSchool.sa?curSchool.sa.length:0);document.getElementById('progressText').textContent=(mc+sa)+' / '+total+' 입력됨';}
+function gradeOMR(){
+  const name=document.getElementById('nameInput').value.trim();
+  if(!name){alert('이름을 입력해주세요!');document.getElementById('nameInput').focus();return;}
+  graded=true;const ans=curSchool.mc.answers;let ok=0;const wrongNums=[];
+  for(let q=0;q<curSchool.mc.count;q++){const ua=mcAnswers[q],ra=ans[q],correct=(ua===ra);if(correct)ok++;else wrongNums.push(q+1);const row=document.getElementById('row_'+q);if(row)row.classList.toggle('wrong',!correct);for(let v=1;v<=5;v++){const b=document.getElementById('b_'+q+'_'+v);if(!b)continue;b.classList.remove('selected','ok','ng');b.classList.add('locked');if(v===ua)b.classList.add(correct?'ok':'ng');}}
+  let saOk=0;const saWrongNums=[];
+  if(curSchool.sa){curSchool.sa.forEach((item,i)=>{const inp=document.getElementById('sainp_'+i),badge=document.getElementById('sabadge_'+i),row=document.getElementById('sarow_'+i);if(inp)inp.classList.add('locked');const stu=(saAnswers[i]||'').trim(),cor=item.answer.trim();if(cor===''){if(badge){badge.textContent='미등록';badge.className='sa-badge un';}}else if(stu===cor){saOk++;if(badge){badge.textContent='정답 ✓';badge.className='sa-badge ok';}if(row)row.classList.add('correct');}else{saWrongNums.push(item.num);if(badge){badge.textContent='오답 ✗';badge.className='sa-badge ng';}if(row)row.classList.add('wrong');const hint=document.createElement('div');hint.className='sa-answer-hint';hint.textContent='정답: '+cor;if(row)row.appendChild(hint);}});}
+  document.getElementById('gradeBtn').disabled=true;saveState();showResult(name,ok,wrongNums,saOk,saWrongNums);
+}
+function showResult(name,ok,wrongNums,saOk,saWrongNums){
+  const total=curSchool.mc.count,pct=Math.round((ok/total)*100),allWrong=[...wrongNums,...(saWrongNums||[])];
+  document.getElementById('resultHeader').textContent=name+' · '+curSchool.name+' · 중2';
+  document.getElementById('resultScore').textContent=pct;document.getElementById('resultScoreSub').textContent='점 / 100점';
+  const stats=document.getElementById('resultStats');stats.innerHTML='';
+  const saTotal=curSchool.sa?curSchool.sa.length:0;
+  const chips=[['total','맞힌 문제 '+ok+'/'+total],['wrong-chip','틀린 문제 '+wrongNums.length+'개'],['rate','정답률 '+pct+'%']];
+  if(saTotal>0)chips.push(['total','주관식 '+(saOk||0)+'/'+saTotal]);
+  chips.forEach(([cls,t])=>{const el=document.createElement('span');el.className='stat-chip '+cls;el.textContent=t;stats.appendChild(el);});
+  const wl=document.getElementById('wrongList');wl.innerHTML='';
+  if(allWrong.length===0){const ac=document.createElement('div');ac.className='all-correct';ac.textContent='🎉 모두 정답!';wl.appendChild(ac);}
+  else{allWrong.sort((a,b)=>a-b).forEach(n=>{const chip=document.createElement('span');chip.className='wrong-chip';chip.textContent=n+'번';wl.appendChild(chip);});}
+  document.getElementById('resultCard').classList.add('show');document.getElementById('resultCard').scrollIntoView({behavior:'smooth',block:'start'});
+}
+function renderGradedState(){
+  const ans=curSchool.mc.answers;
+  for(let q=0;q<curSchool.mc.count;q++){const ua=mcAnswers[q],ra=ans[q],correct=(ua===ra);const row=document.getElementById('row_'+q);if(row&&!correct)row.classList.add('wrong');for(let v=1;v<=5;v++){const b=document.getElementById('b_'+q+'_'+v);if(!b)continue;b.classList.remove('selected','ok','ng');b.classList.add('locked');if(v===ua)b.classList.add(correct?'ok':'ng');}}
+  if(curSchool.sa){curSchool.sa.forEach((item,i)=>{const inp=document.getElementById('sainp_'+i),badge=document.getElementById('sabadge_'+i),row=document.getElementById('sarow_'+i);if(inp)inp.classList.add('locked');const stu=(saAnswers[i]||'').trim(),cor=item.answer.trim();if(cor===''){if(badge){badge.textContent='미등록';badge.className='sa-badge un';}}else if(stu===cor){if(badge){badge.textContent='정답 ✓';badge.className='sa-badge ok';}if(row)row.classList.add('correct');}else{if(badge){badge.textContent='오답 ✗';badge.className='sa-badge ng';}if(row)row.classList.add('wrong');const hint=document.createElement('div');hint.className='sa-answer-hint';hint.textContent='정답: '+cor;if(row)row.appendChild(hint);}});}
+  document.getElementById('gradeBtn').disabled=true;
+  const name=document.getElementById('nameInput').value.trim(),ok=mcAnswers.filter((ua,i)=>ua===ans[i]).length,wrongNums=[];
+  for(let q=0;q<curSchool.mc.count;q++)if(mcAnswers[q]!==ans[q])wrongNums.push(q+1);
+  let saOk=0,saWrongNums=[];if(curSchool.sa){curSchool.sa.forEach((item,i)=>{const stu=(saAnswers[i]||'').trim();if(stu===item.answer.trim())saOk++;else if(item.answer.trim()!=='')saWrongNums.push(item.num);});}
+  if(name)showResult(name,ok,wrongNums,saOk,saWrongNums);
+}
+document.getElementById('nameInput').addEventListener('input',saveState);
+renderSchoolRow();loadState();
+</script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>봄날수학 OMR 채점</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'Noto Sans KR', sans-serif; background: #eee9e2; min-height: 100vh; }
+.wrap { max-width: 480px; margin: 0 auto; padding: 48px 20px 64px; }
+.brand { display: inline-block; background: #ddd6cd; color: #8a7060; font-size: 12px; font-weight: 700; padding: 7px 18px; border-radius: 100px; margin-bottom: 24px; }
+.title { font-size: 40px; font-weight: 900; line-height: 1.15; color: #1a2744; letter-spacing: -1.5px; margin-bottom: 12px; }
+.title em { color: #c0392b; font-style: normal; }
+.subtitle { font-size: 14px; color: #a0adb8; line-height: 1.8; margin-bottom: 36px; }
+.section-hint { font-size: 11px; font-weight: 700; color: #b0bcc6; letter-spacing: 2px; margin-bottom: 14px; }
+.cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.card { background: #fff; border-radius: 18px; padding: 20px 18px 18px; display: flex; flex-direction: column; gap: 8px; text-decoration: none; box-shadow: 0 2px 14px rgba(0,0,0,0.06); border: none; transition: all 0.2s; position: relative; overflow: hidden; }
+.card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: var(--c); border-radius: 18px 18px 0 0; }
+.card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.10); }
+.card:active { transform: translateY(0); }
+.card.g1  { --c: #e07b40; }
+.card.g2  { --c: #4a7fd4; }
+.card.g3a { --c: #3aaa7a; }
+.card.g3b { --c: #8b5cf6; }
+.card-grade { font-size: 11px; font-weight: 800; letter-spacing: 0.5px; color: var(--c); margin-top: 4px; }
+.card-title { font-size: 28px; font-weight: 900; color: #1a2744; letter-spacing: -1px; line-height: 1.1; }
+.card-schools { font-size: 12px; color: #a0adb8; line-height: 1.7; margin-top: 2px; }
+.card-cta { margin-top: 8px; font-size: 13px; font-weight: 700; color: var(--c); }
+.footer { margin-top: 40px; text-align: center; font-size: 12px; color: #bcc5cc; line-height: 1.8; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="brand">봄날수학</div>
+  <h1 class="title">2025 중간고사<br><em>OMR 채점</em></h1>
+  <p class="subtitle">학년을 선택하면<br>바로 채점을 시작할 수 있어요.</p>
+  <p class="section-hint">▸ 학 년 선 택</p>
+  <div class="cards">
+    <a class="card g1" href="omr_1.html">
+      <span class="card-grade">중학교 1학년</span>
+      <span class="card-title">중 1</span>
+      <span class="card-schools">다정중 · 새뜸중<br>보람중</span>
+      <span class="card-cta">채점 시작 →</span>
+    </a>
+    <a class="card g2" href="omr_2.html">
+      <span class="card-grade">중학교 2학년</span>
+      <span class="card-title">중 2</span>
+      <span class="card-schools">나성중 · 다정중<br>도담중</span>
+      <span class="card-cta">채점 시작 →</span>
+    </a>
+    <a class="card g3a" href="omr_3a.html">
+      <span class="card-grade">중학교 3학년 · A</span>
+      <span class="card-title">중3 A</span>
+      <span class="card-schools">나성중 · 도담중<br>두루중</span>
+      <span class="card-cta">채점 시작 →</span>
+    </a>
+    <a class="card g3b" href="omr_3b.html">
+      <span class="card-grade">중학교 3학년 · B</span>
+      <span class="card-title">중3 B</span>
+      <span class="card-schools">양지중 · 아름중<br>소담중</span>
+      <span class="card-cta">채점 시작 →</span>
+    </a>
+  </div>
+  <div class="footer">봄날수학 · 세종시<br>2025 1학기 중간고사 대비</div>
+</div>
+</body>
+</html>
